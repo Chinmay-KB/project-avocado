@@ -47,11 +47,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<String> _fetchUserData(BuildContext context) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('username');
-}
-
 Widget _handleCurrentScreen() {
   return new StreamBuilder<FirebaseUser>(
       stream: firebaseInstance.onAuthStateChanged,
@@ -80,6 +75,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  String username=" ";
+  String roll_no=" ";
+  String phone_no=" ";
   static const platform=const MethodChannel("FAQ_ACTIVITY");
   @override
   Widget build(BuildContext context) {
@@ -89,14 +88,28 @@ class _HomePageState extends State<HomePage> {
     var textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Scaffold(
       drawer: Drawer(
-        child:ListTile(
-          title: Text("Timetable"),
-          onTap: (){
-            Navigator.of(context).pop();
-            Navigator.pushNamed(context, '/timetable');
-          },
-
-        ) ,
+        child:Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              DrawerHeader(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(username,
+                style: TextStyle(
+                  fontFamily: 'PfDin',
+                  fontSize: 20.0
+                )),
+                  Text(phone_no,
+                    style: TextStyle(
+                        fontFamily: 'PfDin',
+                    ),),
+                  Text(roll_no,
+                    style: TextStyle(
+                        fontFamily: 'PfDin',
+                    ),)
+              ],))
+            ],
+        )
       ),
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -127,7 +140,21 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  
+
+  @override
+  void initState(){
+    super.initState();
+    fetchUserData(context);
+  }
+
+  Future fetchUserData(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    username= prefs.getString('username');
+    roll_no=prefs.getString('roll_no');
+    phone_no=prefs.getString('phone_no');
+  }
+
+
   _startFAQActivity() async{
     try {
       await platform.invokeMethod('startFaqActivity');

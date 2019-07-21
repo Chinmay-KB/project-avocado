@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Userdata extends StatelessWidget {
   var rollController = TextEditingController();
   var usernameController = TextEditingController();
-  String rollNo, username = "", phoneNo;
+  String rollNo=" ", username = " ", phoneNo=" ";
 
   @override
   Widget build(BuildContext context) {
