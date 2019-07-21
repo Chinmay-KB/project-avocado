@@ -71,7 +71,9 @@ Widget _handleCurrentScreen() {
               },
             );
           }
-          return Login();
+          else {
+            return Login();
+          }
         }
       });
 }
