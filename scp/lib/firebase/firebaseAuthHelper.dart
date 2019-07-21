@@ -92,6 +92,7 @@ class ScpAuth {
 
     final PhoneVerificationFailed verificationFailed = (AuthException error) {
       print('${error.message}');
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Booooo!')));
     };
 
     firebaseInstance.verifyPhoneNumber(
